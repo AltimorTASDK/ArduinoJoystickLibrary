@@ -218,10 +218,12 @@ public:
         return _hidReportId;
     }
 
-    template<size_t N>
-    void sendRaw(const uint8_t (&data)[N])
+    void sendRaw(const uint8_t *data, int len)
     {
-        DynamicHID().SendReport(data, N);
+        // spin until the TX buffer has space or the dumb USB lib will block for a whole msec
+        while (DynamicHID().SendSpace() == 0);
+
+        DynamicHID().SendReport(data, len);
     }
 };
 
