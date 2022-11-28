@@ -105,7 +105,7 @@ private:
     int32_t  _steeringMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
 
     uint8_t   _hidReportId;
-    uint8_t   _hidReportSize; 
+    uint8_t   _hidReportSize;
 
 protected:
     int buildAndSet16BitValue(bool includeValue, int32_t value, int32_t valueMinimum, int32_t valueMaximum, int32_t actualMinimum, int32_t actualMaximum, uint8_t dataLocation[]);
@@ -132,7 +132,7 @@ public:
 
     void begin(bool initAutoSendState = true);
     void end();
-    
+
     // Set Range Functions
     inline void setXAxisRange(int32_t minimum, int32_t maximum)
     {
@@ -212,6 +212,17 @@ public:
     void setHatSwitch(int8_t hatSwitch, int16_t value);
 
     void sendState();
+
+    uint8_t getHidReportId() const
+    {
+        return _hidReportId;
+    }
+
+    template<size_t N>
+    void sendRaw(const uint8_t (&data)[N])
+    {
+        DynamicHID().SendReport(data, N);
+    }
 };
 
 #endif // !defined(_USING_DYNAMIC_HID)

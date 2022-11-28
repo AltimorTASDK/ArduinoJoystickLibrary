@@ -1,5 +1,5 @@
 /*
-  Modified by Matthew Heironimus to support HID Report Descriptors to be in 
+  Modified by Matthew Heironimus to support HID Report Descriptors to be in
   standard RAM in addition to program memory (PROGMEM).
 
   Copyright (c) 2015, Arduino LLC
@@ -86,7 +86,7 @@ typedef struct
   uint8_t descLenH;
 } DYNAMIC_HIDDescDescriptor;
 
-typedef struct 
+typedef struct
 {
   InterfaceDescriptor hid;
   DYNAMIC_HIDDescDescriptor   desc;
@@ -108,7 +108,7 @@ class DynamicHID_ : public PluggableUSBModule
 public:
   DynamicHID_(void);
   int begin(void);
-  int SendReport(uint8_t id, const void* data, int len);
+  int SendReport(const void* data, int len);
   void AppendDescriptor(DynamicHIDSubDescriptor* node);
 
 protected:

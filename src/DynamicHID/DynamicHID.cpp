@@ -1,5 +1,5 @@
 /*
-  Modified by Matthew Heironimus to support HID Report Descriptors to be in 
+  Modified by Matthew Heironimus to support HID Report Descriptors to be in
   standard RAM in addition to program memory (PROGMEM).
 
    Copyright (c) 2015, Arduino LLC
@@ -62,11 +62,11 @@ int DynamicHID_::getDescriptor(USBSetup& setup)
 			return -1;
 		total += res;
 	}
-	
+
 	// Reset the protocol on reenumeration. Normally the host should not assume the state of the protocol
 	// due to the USB specs, but Windows and Linux just assumes its in report mode.
 	protocol = DYNAMIC_HID_REPORT_PROTOCOL;
-	
+
 	return total;
 }
 
@@ -94,12 +94,9 @@ void DynamicHID_::AppendDescriptor(DynamicHIDSubDescriptor *node)
 	descriptorSize += node->length;
 }
 
-int DynamicHID_::SendReport(uint8_t id, const void* data, int len)
+int DynamicHID_::SendReport(const void* data, int len)
 {
-	uint8_t p[len + 1];
-	p[0] = id;
-	memcpy(&p[1], data, len);
-	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, p, len + 1);
+	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, len);
 }
 
 bool DynamicHID_::setup(USBSetup& setup)
