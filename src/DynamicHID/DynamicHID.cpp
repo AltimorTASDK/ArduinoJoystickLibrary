@@ -28,6 +28,7 @@
 #define USB_Send USBD_Send
 #endif
 
+[[gnu::const]]
 DynamicHID_& DynamicHID()
 {
 	static DynamicHID_ obj;
